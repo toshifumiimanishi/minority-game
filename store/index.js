@@ -1,4 +1,4 @@
-import { playersRef } from "../assets/js/firebase.config";
+import { playersRef } from '~/plugins/firebase';
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
 
 export const state = () => ({

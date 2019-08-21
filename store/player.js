@@ -1,4 +1,4 @@
-import { playersRef } from "../assets/js/firebase.config";
+import { playersRef } from '~/plugins/firebase';
 
 export const actions = {
   async addPlayer(ctx, payload) {

@@ -1,12 +1,13 @@
 import firebase from 'firebase'
 
 const config = {
-  apiKey: 'xxxxxxxxxx',
-  authDomain: 'xxxxxxxxxx.firebaseapp.com',
-  databaseURL: 'https://xxxxxxxxxx.firebaseio.com',
-  projectId: 'xxxxxxxxxx',
-  storageBucket: 'xxxxxxxxxx.appspot.com',
-  messagingSenderId: 'xxxxxxxxxx'
+  apiKey: "xxxxxxxxxx",
+  authDomain: "xxxxxxxxxx.firebaseapp.com",
+  databaseURL: "https://xxxxxxxxxx.firebaseio.com",
+  projectId: "xxxxxxxxxx",
+  storageBucket: "xxxxxxxxxx.appspot.com",
+  messagingSenderId: "xxxxxxxxxx",
+  appId: "xxxxxxxxxx"
 }
 
 if (!firebase.apps.length) {

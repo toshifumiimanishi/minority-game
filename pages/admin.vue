@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { currentGamedataRef, playersRef } from '../assets/js/firebase.config.js'
+import { currentGamedataRef, playersRef } from '~/plugins/firebase'
 import { mapState } from 'vuex'
 
 export default {
