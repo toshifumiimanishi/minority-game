@@ -47,6 +47,7 @@ export default {
   /*
   ** Build configuration
   */
+  buidDir: 'functions/nuxt',
   build: {
     /*
     ** You can extend webpack config here
