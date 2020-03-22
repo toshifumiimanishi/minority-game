@@ -49,7 +49,8 @@ export default {
 }
 
 h1 {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
+  font-size: 24px;
   text-align: center;
 }
 
@@ -62,11 +63,12 @@ form {
 input {
   display: block;
   border: 2px solid;
-  border-radius: 4px;
+  padding: 4px;
+  border-radius: $base-border-radius;
   font-size: 16px;
 
   &:valid {
-    border-color: #00d084;
+    border-color: $input-success-border-color;
   }
 }
 
@@ -74,14 +76,14 @@ button {
   margin-top: 20px;
   padding: 4px 16px;
   border: 2px solid;
-  border-radius: 4px;
+  border-radius: $base-border-radius;
   font-size: 16px;
   font-weight: bold;
 
   input:valid + & {
-    border-color: #00d084;
-    background-color: #00d084;
-    color: #fff;
+    border-color: $btn-success-border-color;
+    background-color: $btn-success-background-color;
+    color: $btn-success-color;
   }
 }
 </style>

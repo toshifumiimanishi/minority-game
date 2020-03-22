@@ -1,4 +1,7 @@
 body {
+  color: $base-color;
+  font-family: $base-font-family;
+  line-height: $base-line-height;
   word-wrap: break-word;
   -webkit-text-size-adjust: 100%;
 }
