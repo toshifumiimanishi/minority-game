@@ -43,8 +43,12 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/style-resources'
   ],
+  styleResources: {
+    scss: '~/assets/css/_partials/_variables.scss'
+  },
   /*
   ** Build configuration
   */
