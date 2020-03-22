@@ -4,7 +4,7 @@
       <h1 class="join_title">少数決ゲーム</h1>
       <form class="join_form" v-on:submit.prevent="joinGame">
         <input class="join_textfiled" type="text" v-model="nickname" placeholder="ニックネーム" required>
-        <button class="join_button" type="submit">参加する</button>
+        <button class="join_button" type="submit" :disabled="!canJoin">参加する</button>
       </form>
     </div>
   </div>
@@ -17,6 +17,14 @@ export default {
       nickname: ''
     }
   },
+
+  computed: {
+    canJoin() {
+      const canJoin = this.nickname.length > 0;
+      return canJoin;
+    }
+  },
+
   methods: {
     joinGame() {
       this.$store.dispatch('player/addPlayer', {
@@ -24,7 +32,7 @@ export default {
         point: 0,
         answer: ''
       })
-    }
+    },
   }
 }
 </script>
@@ -41,7 +49,7 @@ export default {
 }
 
 h1 {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
@@ -57,22 +65,18 @@ input {
   border-radius: 4px;
   font-size: 16px;
 
-  &:invalid {
-    &:focus {
-      border-color: rgba(#cc0000, 0.4);
-    }
-  }
-
   &:valid {
     border-color: #00d084;
   }
 }
 
 button {
-  margin-top: 16px;
+  margin-top: 20px;
+  padding: 4px 16px;
   border: 2px solid;
   border-radius: 4px;
   font-size: 16px;
+  font-weight: bold;
 
   input:valid + & {
     border-color: #00d084;
