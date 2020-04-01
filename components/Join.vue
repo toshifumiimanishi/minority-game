@@ -1,7 +1,7 @@
 <template>
   <div class="join">
     <div class="join_content">
-      <h1 class="join_title">少数決ゲーム</h1>
+      <h1 class="join_title"><img src="~/assets/img/game_title.jpg" alt="少数決ゲーム"></h1>
       <form class="join_form" v-on:submit.prevent="joinGame">
         <input class="join_textfiled" type="text" v-model="nickname" placeholder="ニックネーム" required>
         <button class="join_button" type="submit" :disabled="!canJoin">参加する</button>
@@ -40,7 +40,7 @@ export default {
 <style lang="scss" scoped>
 .join {
   display: flex;
-  background-color: #ccc;
+  background-color: $base-background-color;
   height: 100vh;
 }
 
@@ -49,8 +49,8 @@ export default {
 }
 
 h1 {
-  margin-bottom: 12px;
-  font-size: 24px;
+  margin: 0 auto 20px;
+  width: 80%;
   text-align: center;
 }
 
@@ -63,7 +63,7 @@ form {
 input {
   display: block;
   border: 2px solid;
-  padding: 4px;
+  padding: 4px 4px 4px 8px;
   border-radius: $base-border-radius;
   font-size: 16px;
 
@@ -77,6 +77,7 @@ button {
   padding: 4px 16px;
   border: 2px solid;
   border-radius: $base-border-radius;
+  background-color: $btn-background-color;
   font-size: 16px;
   font-weight: bold;
 
@@ -84,6 +85,11 @@ button {
     border-color: $btn-success-border-color;
     background-color: $btn-success-background-color;
     color: $btn-success-color;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    color: $btn-disabled-color;
   }
 }
 </style>
