@@ -65,6 +65,7 @@ input {
   border: 2px solid;
   padding: 4px 4px 4px 8px;
   border-radius: $base-border-radius;
+  color: $input-color;
   font-size: 16px;
 
   &:valid {
