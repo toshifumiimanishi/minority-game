@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="admin">
     <h1>管理画面</h1>
     <ul v-for="player in players" :key="player.id">
       <li>
@@ -54,3 +54,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.admin {
+ background-color: $base-background-color;
+}
+</style>
