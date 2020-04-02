@@ -27,12 +27,18 @@ export default {
 
   methods: {
     joinGame() {
+      const characterID = this.generateRandomID()
       this.$store.dispatch('player/addPlayer', {
         nickname: this.nickname,
         point: 0,
-        answer: ''
+        answer: '',
+        characterID,
       })
     },
+    generateRandomID(min = 1, max = 7) {
+      const randomNubmer = Math.random()
+      return Math.floor(randomNubmer * (max - min + 1) + min).toString().padStart(2, '0')
+    }
   }
 }
 </script>

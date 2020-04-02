@@ -6,7 +6,7 @@
       <ul>
         <li class="player" v-for="player in players" :key="player.id">
           <p class="player_nickname">{{ player.nickname }}</p>
-          <img :src="require(`~/assets/img/character/${generateRandom()}.png`)" alt="">
+          <img :src="require(`~/assets/img/character/${player.characterID}.png`)" alt="">
         </li>
       </ul>
     </div>
@@ -23,12 +23,6 @@ export default {
   },
   computed: {
     ...mapState(['players'])
-  },
-  methods: {
-    generateRandom(min = 1, max = 7) {
-      const randomNubmer = Math.random()
-      return Math.floor(randomNubmer * (max - min + 1) + min).toString().padStart(2, '0')
-    }
   }
 }
 </script>
