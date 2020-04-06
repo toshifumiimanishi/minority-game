@@ -60,6 +60,20 @@ export default {
     ...mapState(['answers'])
   },
   methods: {
+    countdown() {
+      const totalTime = 10000
+      const oldTime = Date.now()
+      const timerId = setInterval(() => {
+        const currentTime = Date.now()
+        const diff = currentTime - oldTime
+        const remainMSec = totalTime - diff
+        const remainSec = Math.ceil(remainMSec / 1000)
+        this.count = remainSec
+        if (remainMSec <= 0) {
+          clearInterval(timerId)
+        }
+      }, 1000)
+    },
     async fetchTotalAnswer() {
       await this.$store.dispatch('totalAnswer')
     },
@@ -91,20 +105,6 @@ export default {
       if (winner != null) {
         this.addPoint(winner)
       }
-    },
-    countdown() {
-      const totalTime = 10000
-      const oldTime = Date.now()
-      const timerId = setInterval(() => {
-        const currentTime = Date.now()
-        const diff = currentTime - oldTime
-        const remainMSec = totalTime - diff
-        const remainSec = Math.ceil(remainMSec / 1000)
-        this.count = remainSec
-        if (remainMSec <= 0) {
-          clearInterval(timerId)
-        }
-      }, 1000)
     }
   }
 }
