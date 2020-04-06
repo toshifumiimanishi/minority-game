@@ -1,12 +1,13 @@
-import { playersRef } from '~/plugins/firebase';
+import { currentGamedataRef, playersRef } from '~/plugins/firebase';
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
 
 export const state = () => ({
   players: [],
   answers: {
     a: [],
-    b: []
-  }
+    b: [],
+  },
+  gamedata: {},
 })
 
 export const mutations = {
@@ -17,10 +18,12 @@ export const mutations = {
 }
 
 export const actions = {
-  bindGamePlayers: firestoreAction(({ bindFirestoreRef }, ref) => {
-    bindFirestoreRef('players', ref)
+  bindGamedata: firestoreAction(({ bindFirestoreRef }) => {
+    bindFirestoreRef('gamedata', currentGamedataRef)
   }),
-
+  bindGamePlayers: firestoreAction(({ bindFirestoreRef }) => {
+    bindFirestoreRef('players', playersRef)
+  }),
   async totalAnswer({ commit }) {
     let answers = {}
     let a = []
