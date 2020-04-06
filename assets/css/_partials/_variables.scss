@@ -3,6 +3,7 @@ $color-gray: #ccc !default;
 $color-black: #000 !default;
 $color-black-light: #2b2b2b !default;
 $color-green: #00d084 !default;
+$color-orange: #ed7602 !default;
 
 $base-background-color: $color-black-light !default;
 $base-color: $color-white !default;
@@ -25,3 +26,5 @@ $btn-success-border-color: $color-green !default;
 $btn-success-background-color: $color-green !default;
 $btn-success-color: $color-white !default;
 $btn-disabled-color: $color-gray !default;
+
+$game-prime-color: $color-orange !default;
