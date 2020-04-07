@@ -6,14 +6,10 @@
 </template>
 
 <script>
-import Join from '../../components/Join'
-import Question from '../../components/Question'
+import Join from '~/components/Join'
+import Question from '~/components/Question'
 
 export default {
-  data() {
-    return {
-    }
-  },
   components: {
     Join,
     Question

@@ -1,34 +1,50 @@
-import { playersRef } from "../assets/js/firebase.config";
+import { currentGamedataRef, playersRef } from '~/plugins/firebase';
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
 
 export const state = () => ({
   players: [],
   answers: {
     a: [],
-    b: []
-  }
+    b: [],
+  },
+  gamedata: {},
 })
 
 export const mutations = {
   updateAnswers(state, payload) {
     state.answers = payload
   },
+  resetAnswers(state) {
+    state.answers = {
+      a: [],
+      b: [],
+    }
+  },
   ...vuexfireMutations
 }
 
 export const actions = {
-  bindGamePlayers: firestoreAction(({ bindFirestoreRef }, ref) => {
-    bindFirestoreRef('players', ref)
+  bindGamedata: firestoreAction(({ bindFirestoreRef }) => {
+    bindFirestoreRef('gamedata', currentGamedataRef)
   }),
+  bindGamePlayers: firestoreAction(({ bindFirestoreRef }) => {
+    bindFirestoreRef('players', playersRef)
+  }),
+  nextStage: firestoreAction(({ state }) => {
+    const { gamedata } = state
+    const { stage } = gamedata
+    const newStage = stage + 1
 
-  async totalAnswer({ commit }) {
+    return currentGamedataRef.update({ stage: newStage })
+  }),
+  async pullAnswers({ commit }) {
     let answers = {}
     let a = []
     let b = []
 
     const querySnapshot = await playersRef.get()
 
-    querySnapshot.forEach(doc => {
+    querySnapshot.forEach((doc) => {
       const playerId = doc.id
       const { answer } = doc.data()
 

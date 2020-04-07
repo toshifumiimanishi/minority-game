@@ -1,0 +1,42 @@
+@font-face {
+  font-family: "ikamodoki";
+  src: url("~assets/fonts/ikamodoki.ttf") format("truetype");
+}
+
+body {
+  color: $base-color;
+  font-family: $base-font-family;
+  line-height: $base-line-height;
+  word-wrap: break-word;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: 0;
+  background: transparent;
+}
+
+[type="radio"] {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+// アクセシビリティ対応｜iPhone の「視差効果を減らす」に設定しているユーザーに対して、アニメーションを無効にする。
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: unset !important;
+  }
+}
