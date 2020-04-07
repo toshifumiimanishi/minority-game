@@ -9,8 +9,9 @@ $base-background-color: $color-black-light !default;
 $base-color: $color-white !default;
 $base-font-family: "Hiragino Kaku Gothic ProN", "Segoe UI", "BIZ UDPGothic", Meiryo, sans-serif !default;
 $base-line-height: 1.6875 !default;
-$base-timing-function: ease !default;
 $base-border-radius: 4px;
+$base-duration: 0.2s !default;
+$base-timing-function: ease !default;
 
 $label-background-color: $color-white !default;
 $label-checked-background-color: $color-green !default;

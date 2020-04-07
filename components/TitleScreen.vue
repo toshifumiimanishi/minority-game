@@ -2,11 +2,11 @@
   <div class="titlescreen">
     <div class="titlescreen_content">
       <h1><img src="~/assets/img/game_title.jpg" alt="少数決ゲーム"></h1>
-      <p>プレイヤーうけつけちゅう…</p>
+      <p><a href="" @click.prevent="startGame">ゲームスタート</a></p>
       <ul>
         <li class="player" v-for="player in players" :key="player.id">
           <p class="player_nickname">{{ player.nickname }}</p>
-          <img :src="require(`~/assets/img/character/${player.characterID}.png`)" alt="">
+          <img class="player_img" :src="require(`~/assets/img/character/${player.characterID}.png`)" alt="">
         </li>
       </ul>
     </div>
@@ -14,15 +14,19 @@
 </template>
 
 <script>
-import { playersRef } from '~/plugins/firebase'
 import { mapState } from 'vuex'
 
 export default {
   created() {
-    this.$store.dispatch('bindGamePlayers', playersRef)
+    this.$store.dispatch('bindGamePlayers')
   },
   computed: {
     ...mapState(['players'])
+  },
+  methods: {
+    startGame() {
+      this.$store.dispatch('nextStage')
+    }
   }
 }
 </script>
@@ -48,6 +52,16 @@ p {
   font-size: 36px;
   font-family: "ikamodoki", sans-serif;
   text-align: center;
+
+  a {
+    transition-property: opacity;
+    transition-duration: $base-duration;
+    transition-timing-function: $base-timing-function;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
 }
 
 ul {
@@ -57,10 +71,11 @@ ul {
   left: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
 }
 
 .player {
+  display: flex;
+  flex-direction: column;
   margin: 0 16px;
   width: 100px;
   transform: translateY(40px);
@@ -69,5 +84,9 @@ ul {
 .player_nickname {
   font-size: 24px;
   white-space: nowrap;
+}
+
+.player_img {
+  margin: auto 0 0;
 }
 </style>

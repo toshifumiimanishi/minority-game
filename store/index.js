@@ -30,6 +30,13 @@ export const actions = {
   bindGamePlayers: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('players', playersRef)
   }),
+  nextStage: firestoreAction(({ state }) => {
+    const { gamedata } = state
+    const { stage } = gamedata
+    const newStage = stage + 1
+
+    return currentGamedataRef.update({ stage: newStage })
+  }),
   async pullAnswers({ commit }) {
     let answers = {}
     let a = []
