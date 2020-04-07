@@ -1,5 +1,5 @@
 {
-  "name": "Nuxt-Firebase-un-Tech-demo",
+  "name": "nuxt-firebase-qiita-demo",
   "version": "2.0.0",
   "description": "My phenomenal Nuxt.js project",
   "author": "Imanishi Toshifumi",
@@ -8,7 +8,8 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "@nuxtjs/dotenv": "^1.4.0",
