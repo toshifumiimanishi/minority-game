@@ -1,16 +1,16 @@
 <template>
   <div class="game">
     <div class="game_container">
-      <div class="game_question">もらえるならどっち？</div>
+      <div class="game_question">{{ questions[part - 1].question }}</div>
       <div class="game_answers">
         <div class="game_answer" :class="answerAClasses">
-          <div>A. ガリガリ君</div>
-          <img src="~/assets/img/question/01_a.png" alt="">
+          <div>A. {{ questions[part - 1].answer.a }}</div>
+          <img :src="require(`~/assets/img/question/${part.toString().padStart(2, '0')}_a.png`)" alt="">
           <div>{{ numberOfAnswerA }}</div>
         </div>
         <div class="game_answer" :class="answerBClasses">
-          <div>B. Häagen-Dazs</div>
-          <img src="~/assets/img/question/01_b.png" alt="">
+          <div>B. {{ questions[part - 1].answer.b }}</div>
+          <img :src="require(`~/assets/img/question/${part.toString().padStart(2, '0')}_b.png`)" alt="">
           <div>{{ numberOfAnswerB }}</div>
         </div>
       </div>
@@ -25,8 +25,10 @@ import { playersRef } from '~/plugins/firebase'
 import { mapState } from 'vuex'
 
 export default {
+  props: ['questions'],
   data() {
     return {
+      part: 1,
       count: 10,
     }
   },

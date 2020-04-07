@@ -1,7 +1,7 @@
 <template>
   <div>
     <TitleScreen v-if="gamedata.stage == 0" />
-    <PlayScreen v-else-if="gamedata.stage == 1" />
+    <PlayScreen v-else-if="gamedata.stage == 1" :questions="questions" />
   </div>
 </template>
 
@@ -14,6 +14,11 @@ export default {
   components: {
     TitleScreen,
     PlayScreen,
+  },
+  asyncData() {
+    return {
+      questions: require('~/assets/data/questions.json')
+    }
   },
   created() {
     this.$store.dispatch('bindGamedata')
