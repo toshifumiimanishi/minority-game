@@ -15,7 +15,7 @@ if (!firebase.apps.length) {
 }
 
 const db = firebase.firestore()
-const gamedataId = 'xxxxxxxxxx'
+const gamedataId = process.env.GAME_DATA_ID
 const gamedataRef = db.collection('gamedata')
 
 export const currentGamedataRef = gamedataRef.doc(gamedataId)
