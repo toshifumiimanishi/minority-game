@@ -4,30 +4,42 @@
       <h1><img src="~/assets/img/question_title.jpg" alt="問題画面"></h1>
       <form v-on:submit.prevent="answerToQuestion">
         <div class="question_fieldset">
-          <input id="A" type="radio" name="answer" value="a" v-model="answer">
+          <input id="A" type="radio" name="answer" value="a" v-model="answer" :disabled="isReady">
           <label for="A">
             <span>A</span>
           </label>
-          <input id="B" type="radio" name="answer" value="b" v-model="answer">
+          <input id="B" type="radio" name="answer" value="b" v-model="answer" :disabled="isReady">
           <label for="B">
             <span>B</span>
           </label>
         </div>
-        <button type="submit">回答を送信する</button>
+        <button type="submit" :disabled="isReady">回答を送信する</button>
       </form>
     </div>
+    <p class="question_loading" v-show="isReady">準備中…</p>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   data() {
     return {
-      answer: ''
+      answer: '',
     }
+  },
+  created() {
+    this.$store.dispatch('bindGamedata')
   },
   props: {
     playerId: String
+  },
+  computed: {
+    isReady() {
+      return this.gamedata.stage === 0
+    },
+    ...mapState(['gamedata'])
   },
   methods: {
     answerToQuestion() {
@@ -84,6 +96,13 @@ label {
   }
 }
 
+label {
+  input:disabled + & {
+    opacity: 0.7;
+    color: $btn-disabled-color;
+  }
+}
+
 button {
   margin-top: 20px;
   padding: 4px 16px;
@@ -92,6 +111,19 @@ button {
   background-color: $btn-background-color;
   color: $btn-color;
   font-size: 16px;
+  font-weight: bold;
+
+  &:disabled {
+    opacity: 0.7;
+    color: $btn-disabled-color;
+  }
+}
+
+.question_loading {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: percentage(20 / 750);
   font-weight: bold;
 }
 </style>
