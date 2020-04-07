@@ -14,6 +14,12 @@ export const mutations = {
   updateAnswers(state, payload) {
     state.answers = payload
   },
+  resetAnswers(state) {
+    state.answers = {
+      a: [],
+      b: [],
+    }
+  },
   ...vuexfireMutations
 }
 
@@ -24,14 +30,14 @@ export const actions = {
   bindGamePlayers: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('players', playersRef)
   }),
-  async totalAnswer({ commit }) {
+  async pullAnswers({ commit }) {
     let answers = {}
     let a = []
     let b = []
 
     const querySnapshot = await playersRef.get()
 
-    querySnapshot.forEach(doc => {
+    querySnapshot.forEach((doc) => {
       const playerId = doc.id
       const { answer } = doc.data()
 

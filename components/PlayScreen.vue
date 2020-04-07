@@ -16,6 +16,7 @@
       </div>
       <div class="game_count">{{ count }}</div>
       <button type="button" @click="computeResult" v-show="isTimeout">結果発表</button>
+      <button type="button" @click="nextGame" v-show="isTimeout">次の問題</button>
     </div>
   </div>
 </template>
@@ -24,16 +25,18 @@
 import { playersRef } from '~/plugins/firebase'
 import { mapState } from 'vuex'
 
+const GAME_COUNT = 10
+
 export default {
   props: ['questions'],
   data() {
     return {
       part: 1,
-      count: 10,
+      count: GAME_COUNT,
     }
   },
   mounted() {
-    this.countdown()
+    this.startGame()
   },
   computed: {
     answerAClasses() {
@@ -63,7 +66,7 @@ export default {
   },
   methods: {
     countdown() {
-      const totalTime = 10000
+      const totalTime = GAME_COUNT * 1000
       const oldTime = Date.now()
       const timerId = setInterval(() => {
         const currentTime = Date.now()
@@ -76,8 +79,17 @@ export default {
         }
       }, 1000)
     },
-    async fetchTotalAnswer() {
-      await this.$store.dispatch('totalAnswer')
+    startGame() {
+      this.countdown()
+    },
+    nextGame() {
+      this.$store.commit('resetAnswers')
+      this.count = GAME_COUNT
+      this.part++
+      this.startGame()
+    },
+    async fetchAnswers() {
+      await this.$store.dispatch('pullAnswers')
     },
     compareAnswer() {
       const { a, b } = this.answers
@@ -102,7 +114,7 @@ export default {
       })
     },
     async computeResult() {
-      await this.fetchTotalAnswer()
+      await this.fetchAnswers()
       const { winner } = this.compareAnswer()
       if (winner != null) {
         this.addPoint(winner)
@@ -178,5 +190,9 @@ button {
   color: $btn-color;
   font-size: 24px;
   font-weight: bold;
+
+  + button {
+    margin-top: 12px;
+  }
 }
 </style>
