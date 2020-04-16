@@ -102,7 +102,9 @@ export default {
           winner: b,
         }
       } else {
-        return null
+        return {
+          winner: null,
+        }
       }
     },
     addPoint(winner) {
