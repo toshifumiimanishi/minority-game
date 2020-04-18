@@ -31,6 +31,11 @@ jobs:
         FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
         FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
         GAME_DATA_ID: ${{ secrets.GAME_DATA_ID }}
+    - name: Archive Production Artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: dist
+        path: dist
 
   deploy:
     
@@ -38,8 +43,13 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: w9jds/firebase-action@master
+      - name: Download Artifact
+        uses: actions/download-artifact@master
         with:
-          args: deploy
+          name: dist
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
