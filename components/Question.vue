@@ -13,10 +13,13 @@
             <span>B</span>
           </label>
         </div>
-        <button type="submit" :disabled="isReady">回答を送信する</button>
+        <button type="submit" :class="buttonClasses" :disabled="!canAnswer">
+          {{ buttonLabel }}
+        </button>
       </form>
     </div>
     <p class="question_loading" v-show="isReady">準備中…</p>
+    <p class="question_loading" v-show="isProcessing">送信中…</p>
   </div>
 </template>
 
@@ -27,6 +30,8 @@ export default {
   data() {
     return {
       answer: '',
+      isProcessing: false,
+      isAnswered: false,
     }
   },
   created() {
@@ -36,16 +41,39 @@ export default {
     playerId: String
   },
   computed: {
+    buttonLabel() {
+      return this.isAnswered ? '回答済み' : '回答を送信する'
+    },
+    buttonClasses() {
+      return {
+        '-answered': this.isAnswered
+      }
+    },
     isReady() {
       return this.gamedata.stage === 0
+    },
+    canAnswer() {
+      return !this.isReady && this.answer.length > 0
     },
     ...mapState(['gamedata'])
   },
   methods: {
     answerToQuestion() {
+      if (this.isAnswered || this.isProcessing) {
+        return
+      }
+
+      this.isProcessing = true
       this.$store.dispatch('player/sendAnswer', {
         playerId: this.playerId,
         playerAnswer: this.answer
+      })
+      .then(() => {
+        this.isProcessing = false
+        this.isAnswered = true
+      })
+      .catch((error) => {
+        console.error(error)
       })
     }
   }
@@ -57,7 +85,7 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: $base-background-color;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .question_container {
@@ -67,6 +95,7 @@ export default {
 h1 {
   margin: 0 auto 20px;
   width: 80%;
+  text-align: center;
 }
 
 .question_fieldset {
@@ -116,6 +145,12 @@ button {
   &:disabled {
     opacity: 0.7;
     color: $btn-disabled-color;
+  }
+
+  &.-answered {
+    border-color: $btn-success-border-color;
+    background-color: $btn-success-background-color;
+    color: $btn-success-color;
   }
 }
 

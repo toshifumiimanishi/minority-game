@@ -10,8 +10,16 @@ export const actions = {
   sendAnswer({ commit }, { playerId, playerAnswer }) {
     const playerDocumentRef = playersRef.doc(playerId)
 
-    playerDocumentRef.update({
-      answer: playerAnswer
+    return new Promise((resolve, reject) => {
+      playerDocumentRef.update({
+        answer: playerAnswer
+      })
+      .then(() => {
+        resolve()
+      })
+      .catch((error) => {
+        reject(error)
+      })
     })
   }
 }
