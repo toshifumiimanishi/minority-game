@@ -22,16 +22,15 @@
 </template>
 
 <script>
-import { playersRef } from '~/plugins/firebase'
+import { currentGamedataRef, playersRef } from '~/plugins/firebase'
 import { mapState } from 'vuex'
 
 const GAME_COUNT = 10
 
 export default {
-  props: ['questions'],
+  props: ['questions', 'part'],
   data() {
     return {
-      part: 1,
       count: GAME_COUNT,
     }
   },
@@ -83,10 +82,15 @@ export default {
       this.countdown()
     },
     nextGame() {
+      let part = this.part
       this.$store.commit('resetAnswers')
       this.count = GAME_COUNT
-      this.part++
-      this.startGame()
+      part++
+      currentGamedataRef.update({
+        part
+      }).then(() => {
+        this.startGame()
+      })
     },
     async fetchAnswers() {
       await this.$store.dispatch('pullAnswers')
@@ -95,31 +99,31 @@ export default {
       const { a, b } = this.answers
       if (a.length < b.length) {
         return {
-          winner: a,
+          winners: a,
         }
       } else if (a.length > b.length) {
         return {
-          winner: b,
+          winners: b,
         }
       } else {
         return {
-          winner: null,
+          winners: null,
         }
       }
     },
-    addPoint(winner) {
-      winner.forEach(async (id) => {
-        const doc = await playersRef.doc(id).get()
+    addPoint(winners) {
+      winners.map(async (winner) => {
+        const doc = await playersRef.doc(winner).get()
         let { point } = doc.data()
         point++
-        playersRef.doc(id).update({ point })
+        playersRef.doc(winner).update({ point })
       })
     },
     async computeResult() {
       await this.fetchAnswers()
-      const { winner } = this.compareAnswer()
-      if (winner != null) {
-        this.addPoint(winner)
+      const { winners } = this.compareAnswer()
+      if (winners != null) {
+        this.addPoint(winners)
       }
     }
   }
@@ -131,7 +135,7 @@ export default {
   position: relative;
   display: flex;
   background-color: $base-background-color;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .game_container {
@@ -139,6 +143,7 @@ export default {
   flex-direction: column;
   align-items: center;
   margin: auto;
+  padding: 80px 0;
   width: 100%;
 }
 

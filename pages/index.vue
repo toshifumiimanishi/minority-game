@@ -1,7 +1,7 @@
 <template>
   <div>
     <TitleScreen v-if="gamedata.stage == 0" />
-    <PlayScreen v-else-if="gamedata.stage == 1" :questions="questions" />
+    <PlayScreen v-else-if="gamedata.stage == 1" :questions="questions" :part="gamedata.part" />
   </div>
 </template>
 
