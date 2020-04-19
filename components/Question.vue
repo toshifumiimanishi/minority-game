@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { currentGamedataRef } from '~/plugins/firebase'
 import { mapState } from 'vuex'
 
 export default {
@@ -36,6 +37,13 @@ export default {
   },
   created() {
     this.$store.dispatch('bindGamedata')
+  },
+  mounted() {
+    currentGamedataRef.onSnapshot((doc) => {
+      if (this.isAnswered) {
+        this.resetAnswer()
+      }
+    })
   },
   props: {
     playerId: String
@@ -75,6 +83,10 @@ export default {
       .catch((error) => {
         console.error(error)
       })
+    },
+    resetAnswer() {
+      this.answer = ''
+      this.isAnswered = false
     }
   }
 }
