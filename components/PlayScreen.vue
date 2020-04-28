@@ -14,9 +14,9 @@
           <div>{{ numberOfAnswerB }}</div>
         </div>
       </div>
-      <div class="game_count">{{ count }}</div>
+      <div class="game_count" v-show="!isTimeout">{{ count }}</div>
       <button type="button" @click="computeResult" v-show="isTimeout">結果発表</button>
-      <button type="button" @click="nextGame" v-show="isTimeout">次の問題</button>
+      <button type="button" @click="nextGame" v-show="isTimeout" :disabled="!canGoToNextGame">次の問題</button>
     </div>
   </div>
 </template>
@@ -32,6 +32,7 @@ export default {
   data() {
     return {
       count: GAME_COUNT,
+      canGoToNextGame: false,
     }
   },
   mounted() {
@@ -125,6 +126,7 @@ export default {
       if (winners != null) {
         this.addPoint(winners)
       }
+      this.canGoToNextGame = true
     }
   }
 }
@@ -197,6 +199,11 @@ button {
   color: $btn-color;
   font-size: 24px;
   font-weight: bold;
+
+  &:disabled {
+    opacity: 0.7;
+    color: $btn-disabled-color;
+  }
 
   + button {
     margin-top: 12px;
